@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', path='icons/rock.png') }}">
+    <title>{% block title %}{% endblock %}</title>
+    {% block styles %}{% endblock styles %}
+    {% endblock %}
+</head>
+<body>
+    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer">
+        {% block footer %}
+        &copy; Copyright 2024 by <a href="https://github.com/Kematin">Kematin</a>.
+        {% endblock %}
+    </div>
+</body>
+</html>
