@@ -11,8 +11,10 @@ templates = Jinja2Templates(directory="templates")
 
 @router.get("/", response_class=HTMLResponse, dependencies=[Depends(cookie)])
 async def dashboard_page(
-    request: Request, session_data: SessionData = Depends(verifier)
+    request: Request, session_data: SessionData | None = Depends(verifier)
 ):
+    if session_data is None:
+        return RedirectResponse(url="/login", status_code=303)
     return templates.TemplateResponse("index.html", {"request": request})
 
 

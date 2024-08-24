@@ -2,6 +2,7 @@ import re
 from uuid import UUID, uuid4
 
 from fastapi import Depends, HTTPException, Request, Response
+from fastapi.responses import RedirectResponse
 from fastapi_sessions.backends.implementations import InMemoryBackend
 from fastapi_sessions.frontends.implementations import CookieParameters, SessionCookie
 from fastapi_sessions.session_verifier import SessionVerifier
@@ -31,7 +32,7 @@ cookie_params = CookieParameters()
 cookie = CustomSessionCookie(
     cookie_name="cookie",
     identifier="general_verifier",
-    auto_error=True,
+    auto_error=False,
     secret_key=config.api.session_secret,
     cookie_params=cookie_params,
 )
@@ -76,7 +77,7 @@ class BasicVerifier(SessionVerifier[UUID, SessionData]):
 
 verifier = BasicVerifier(
     identifier="general_verifier",
-    auto_error=True,
+    auto_error=False,
     backend=backend,
     auth_http_exception=HTTPException(status_code=403, detail="invalid session"),
 )
