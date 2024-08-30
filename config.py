@@ -15,12 +15,23 @@ class APIConfig:
     port: int
     origins: list
     session_secret: str
+    debug: bool
+
+
+@dataclass(frozen=True)
+class Database:
+    db: str
+    username: str
+    password: str
+    port: int
+    host: str
 
 
 @dataclass(frozen=True)
 class Config:
     admin: AdminConfig
     api: APIConfig
+    database: Database
 
 
 def load_config(path: str = None):
@@ -36,6 +47,14 @@ def load_config(path: str = None):
             port=env.int("PORT"),
             origins=env.list("ORIGINS"),
             session_secret=env.str("SESSION_SECRET_KEY"),
+            debug=env.bool("DEBUG"),
+        ),
+        database=Database(
+            db=env.str("POSTGRES_DATABASE"),
+            username=env.str("POSTGRES_USER"),
+            password=env.str("POSTGRES_PASSWORD"),
+            port=env.int("POSTGRES_PORT"),
+            host=env.str("POSTGRES_HOST"),
         ),
     )
 
